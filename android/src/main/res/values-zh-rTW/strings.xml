@@ -10,6 +10,7 @@
     <string name="label_eraser">橡皮擦</string>
     <string name="label_eraser_mode">橡皮擦模式</string>
     <string name="label_text">文字</string>
+    <string name="label_text_hint">長按以編輯內容</string>
     <string name="label_filter">濾鏡</string>
     <string name="label_adjust">調整</string>
     <string name="msg_save_image">要退出而不儲存圖片嗎？</string>
@@ -22,5 +23,6 @@
     <string name="cancel">取消</string>
     <string name="discard">捨棄</string>
     <string name="label_brush_size">筆刷大小</string>
+    <string name="label_eraser_size">橡皮大小</string>
     <string name="label_opacity">不透明度</string>
 </resources>

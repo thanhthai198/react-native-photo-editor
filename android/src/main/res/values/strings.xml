@@ -10,6 +10,7 @@
   <string name="label_eraser">Eraser</string>
   <string name="label_eraser_mode">Eraser Mode</string>
   <string name="label_text">Text</string>
+  <string name="label_text_hint">Press and hold to edit content</string>
   <string name="label_filter">Filter</string>
   <string name="label_adjust">Adjust</string>
   <string name="msg_save_image">Are you want to exit without saving image ?</string>
@@ -22,6 +23,7 @@
   <string name="cancel">Cancel</string>
   <string name="discard">Discard</string>
   <string name="label_brush_size">Brush</string>
+  <string name="label_eraser_size">Eraser Size</string>
   <string name="label_opacity">Opacity</string>
 
   <string-array name="photo_editor_emoji">

@@ -10,6 +10,7 @@
     <string name="label_eraser">消しゴム</string>
     <string name="label_eraser_mode">消しゴムモード</string>
     <string name="label_text">テキスト</string>
+    <string name="label_text_hint">長押しして内容を編集</string>
     <string name="label_filter">フィルター</string>
     <string name="label_adjust">調整</string>
     <string name="msg_save_image">画像を保存せずに終了しますか？</string>
@@ -22,5 +23,6 @@
     <string name="cancel">キャンセル</string>
     <string name="discard">破棄</string>
     <string name="label_brush_size">ブラシサイズ</string>
+    <string name="label_eraser_size">消しゴムのサイズ</string>
     <string name="label_opacity">不透明度</string>
 </resources>

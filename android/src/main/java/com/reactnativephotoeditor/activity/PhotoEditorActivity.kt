@@ -61,13 +61,14 @@ import java.util.Locale
 
 
 open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, View.OnClickListener,
-  PropertiesBSFragment.Properties, ShapeBSFragment.Properties, StickerListener,
+  PropertiesBSFragment.Properties, ShapeBSFragment.Properties, EraserBSFragment.Properties, StickerListener,
   OnItemSelected, FilterListener {
   private var mPhotoEditor: PhotoEditor? = null
   private var mProgressDialog: ProgressDialog? = null
   private var mPhotoEditorView: PhotoEditorView? = null
   private var mPropertiesBSFragment: PropertiesBSFragment? = null
   private var mShapeBSFragment: ShapeBSFragment? = null
+  private var mEraserBSFragment: EraserBSFragment? = null
   private var mShapeBuilder: ShapeBuilder? = null
   private var mStickerFragment: StickerFragment? = null
   private var mTxtCurrentTool: TextView? = null
@@ -134,6 +135,9 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
 
     mShapeBSFragment = ShapeBSFragment()
     mShapeBSFragment!!.setPropertiesChangeListener(this)
+
+    mEraserBSFragment = EraserBSFragment()
+    mEraserBSFragment!!.setPropertiesChangeListener(this)
 
     val llmTools = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     mRvTools!!.layoutManager = llmTools
@@ -261,7 +265,7 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
       val styleBuilder = TextStyleBuilder()
       styleBuilder.withTextColor(newColorCode)
       mPhotoEditor!!.editText(rootView, inputText, styleBuilder)
-      mTxtCurrentTool!!.setText(R.string.label_text)
+      mTxtCurrentTool!!.setText(R.string.label_text_hint)
     }
   }
 
@@ -358,6 +362,11 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
     mPhotoEditor!!.setShape(mShapeBuilder!!.withShapeType(shapeType))
   }
 
+  override fun onEraserSizeChanged(eraserSize: Int) {
+    mPhotoEditor!!.setBrushSize(eraserSize.toFloat())
+    mTxtCurrentTool!!.setText(R.string.label_eraser_mode)
+  }
+
   override fun onStickerClick(bitmap: Bitmap) {
     mPhotoEditor!!.addImage(bitmap)
     mTxtCurrentTool!!.setText(R.string.label_sticker)
@@ -397,12 +406,13 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
           val styleBuilder = TextStyleBuilder()
           styleBuilder.withTextColor(colorCode)
           mPhotoEditor!!.addText(inputText, styleBuilder)
-          mTxtCurrentTool!!.setText(R.string.label_text)
+          mTxtCurrentTool!!.setText(R.string.label_text_hint)
         }
       }
       ToolType.ERASER -> {
         mPhotoEditor!!.brushEraser()
         mTxtCurrentTool!!.setText(R.string.label_eraser_mode)
+        showBottomSheetDialogFragment(mEraserBSFragment)
       }
       ToolType.FILTER -> {
         mTxtCurrentTool!!.setText(R.string.label_filter)

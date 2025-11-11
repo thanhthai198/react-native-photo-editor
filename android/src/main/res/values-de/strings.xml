@@ -10,6 +10,7 @@
     <string name="label_eraser">Radiergummi</string>
     <string name="label_eraser_mode">Radiergummi-Modus</string>
     <string name="label_text">Text</string>
+    <string name="label_text_hint">Lange drücken, um Inhalt zu bearbeiten</string>
     <string name="label_filter">Filter</string>
     <string name="label_adjust">Anpassen</string>
     <string name="msg_save_image">Möchten Sie beenden, ohne das Bild zu speichern?</string>
@@ -22,5 +23,6 @@
     <string name="cancel">Abbrechen</string>
     <string name="discard">Verwerfen</string>
     <string name="label_brush_size">Pinselgröße</string>
+    <string name="label_eraser_size">Radiergröße</string>
     <string name="label_opacity">Deckkraft</string>
 </resources>

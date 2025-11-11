@@ -10,6 +10,7 @@
     <string name="label_eraser">Gomma</string>
     <string name="label_eraser_mode">Modalità gomma</string>
     <string name="label_text">Testo</string>
+    <string name="label_text_hint">Tieni premuto per modificare il contenuto</string>
     <string name="label_filter">Filtro</string>
     <string name="label_adjust">Regola</string>
     <string name="msg_save_image">Vuoi uscire senza salvare l\'immagine?</string>
@@ -22,5 +23,6 @@
     <string name="cancel">Annulla</string>
     <string name="discard">Scarta</string>
     <string name="label_brush_size">Dimensione pennello</string>
+    <string name="label_eraser_size">Dimensione gomma</string>
     <string name="label_opacity">Opacità</string>
 </resources>

@@ -10,6 +10,7 @@
     <string name="label_eraser">지우개</string>
     <string name="label_eraser_mode">지우개 모드</string>
     <string name="label_text">텍스트</string>
+    <string name="label_text_hint">길게 눌러 내용 편집</string>
     <string name="label_filter">필터</string>
     <string name="label_adjust">조정</string>
     <string name="msg_save_image">이미지를 저장하지 않고 종료하시겠습니까?</string>
@@ -22,5 +23,6 @@
     <string name="cancel">취소</string>
     <string name="discard">삭제</string>
     <string name="label_brush_size">브러시 크기</string>
+    <string name="label_eraser_size">지우개 크기</string>
     <string name="label_opacity">불투명도</string>
 </resources>

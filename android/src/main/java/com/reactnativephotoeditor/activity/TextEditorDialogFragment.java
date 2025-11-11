@@ -2,7 +2,11 @@ package com.reactnativephotoeditor.activity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,6 +28,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.reactnativephotoeditor.R;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Field;
 
 
 public class TextEditorDialogFragment extends DialogFragment {
@@ -86,7 +92,7 @@ public class TextEditorDialogFragment extends DialogFragment {
         mAddTextEditText = view.findViewById(R.id.add_text_edit_text);
         mInputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         mAddTextDoneTextView = view.findViewById(R.id.add_text_done_tv);
-        mAddTextEditText.requestFocus();
+        
         //Setup the color picker for text color
         RecyclerView addTextColorPickerRecyclerView = view.findViewById(R.id.add_text_color_picker_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -99,13 +105,50 @@ public class TextEditorDialogFragment extends DialogFragment {
             public void onColorPickerClickListener(int colorCode) {
                 mColorCode = colorCode;
                 mAddTextEditText.setTextColor(colorCode);
+                // Update cursor color with a slight delay to ensure it takes effect
+                mAddTextEditText.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setCursorColor(mAddTextEditText, colorCode);
+                        // Force cursor to refresh
+                        int cursorPosition = mAddTextEditText.getSelectionStart();
+                        mAddTextEditText.setSelection(cursorPosition);
+                    }
+                });
             }
         });
         addTextColorPickerRecyclerView.setAdapter(colorPickerAdapter);
-        mAddTextEditText.setText(getArguments().getString(EXTRA_INPUT_TEXT));
+        
+        String inputText = getArguments().getString(EXTRA_INPUT_TEXT);
+        mAddTextEditText.setText(inputText);
         mColorCode = getArguments().getInt(EXTRA_COLOR_CODE);
         mAddTextEditText.setTextColor(mColorCode);
-        mInputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        
+        // Set the selected color in the color picker to highlight it
+        colorPickerAdapter.setSelectedColor(mColorCode);
+        
+        // Set cursor color to match text color with a delay
+        mAddTextEditText.post(new Runnable() {
+            @Override
+            public void run() {
+                setCursorColor(mAddTextEditText, mColorCode);
+            }
+        });
+        
+        // Show keyboard immediately after view is fully rendered to prevent screen flickering
+        mAddTextEditText.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mAddTextEditText != null && mInputMethodManager != null) {
+                    mAddTextEditText.requestFocus();
+                    // Set cursor to end of text
+                    if (mAddTextEditText.getText() != null) {
+                        mAddTextEditText.setSelection(mAddTextEditText.getText().length());
+                    }
+                    mInputMethodManager.showSoftInput(mAddTextEditText, InputMethodManager.SHOW_FORCED);
+                }
+            }
+        }, 100);
 
         //Make a callback on activity when user is done with text editing
         mAddTextDoneTextView.setOnClickListener(new View.OnClickListener() {
@@ -126,5 +169,90 @@ public class TextEditorDialogFragment extends DialogFragment {
     //Callback to listener if user is done with text editing
     public void setOnTextEditorListener(TextEditor textEditor) {
         mTextEditor = textEditor;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Hide keyboard when dialog is destroyed to prevent flickering
+        if (mInputMethodManager != null && mAddTextEditText != null) {
+            mInputMethodManager.hideSoftInputFromWindow(mAddTextEditText.getWindowToken(), 0);
+        }
+    }
+
+    private void setCursorColor(EditText editText, int color) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                // Android 10 (API 29) and above - most reliable method
+                Drawable textCursorDrawable = editText.getTextCursorDrawable();
+                if (textCursorDrawable == null) {
+                    // Create a new drawable if none exists
+                    GradientDrawable cursorDrawable = new GradientDrawable();
+                    cursorDrawable.setShape(GradientDrawable.RECTANGLE);
+                    float density = getResources().getDisplayMetrics().density;
+                    int cursorWidth = (int) (2 * density);
+                    cursorDrawable.setSize(cursorWidth, 0);
+                    cursorDrawable.setColor(color);
+                    editText.setTextCursorDrawable(cursorDrawable);
+                } else {
+                    // Tint the existing drawable
+                    textCursorDrawable = textCursorDrawable.mutate();
+                    textCursorDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                    editText.setTextCursorDrawable(textCursorDrawable);
+                }
+            } else {
+                // For older Android versions, use reflection
+                Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+                fCursorDrawableRes.setAccessible(true);
+                int drawableResId = fCursorDrawableRes.getInt(editText);
+                
+                if (drawableResId != 0) {
+                    // Get the default cursor drawable and tint it
+                    Drawable drawable = ContextCompat.getDrawable(getContext(), drawableResId);
+                    if (drawable != null) {
+                        drawable = drawable.mutate();
+                        drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+                        
+                        Drawable[] drawables = new Drawable[]{drawable, drawable};
+                        
+                        Field fEditor = TextView.class.getDeclaredField("mEditor");
+                        fEditor.setAccessible(true);
+                        Object editor = fEditor.get(editText);
+                        
+                        if (editor != null) {
+                            Field fCursorDrawable = editor.getClass().getDeclaredField("mCursorDrawable");
+                            fCursorDrawable.setAccessible(true);
+                            fCursorDrawable.set(editor, drawables);
+                        }
+                    }
+                } else {
+                    // Fallback: create custom drawables
+                    float density = getResources().getDisplayMetrics().density;
+                    int cursorWidth = (int) (2 * density);
+                    
+                    GradientDrawable drawable1 = new GradientDrawable();
+                    drawable1.setShape(GradientDrawable.RECTANGLE);
+                    drawable1.setSize(cursorWidth, 0);
+                    drawable1.setColor(color);
+                    
+                    GradientDrawable drawable2 = new GradientDrawable();
+                    drawable2.setShape(GradientDrawable.RECTANGLE);
+                    drawable2.setSize(cursorWidth, 0);
+                    drawable2.setColor(color);
+                    
+                    Field fEditor = TextView.class.getDeclaredField("mEditor");
+                    fEditor.setAccessible(true);
+                    Object editor = fEditor.get(editText);
+                    
+                    if (editor != null) {
+                        Field fCursorDrawable = editor.getClass().getDeclaredField("mCursorDrawable");
+                        fCursorDrawable.setAccessible(true);
+                        fCursorDrawable.set(editor, new Drawable[]{drawable1, drawable2});
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
