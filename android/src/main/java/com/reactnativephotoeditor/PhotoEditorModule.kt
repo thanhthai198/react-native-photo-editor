@@ -2,6 +2,7 @@ package com.reactnativephotoeditor
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import com.facebook.react.bridge.*
 import com.reactnativephotoeditor.activity.PhotoEditorActivity
 import com.reactnativephotoeditor.activity.constant.ResponseCode
@@ -30,10 +31,25 @@ class PhotoEditorModule(reactContext: ReactApplicationContext) : ReactContextBas
     context.addActivityEventListener(mActivityEventListener)
 
     val path = options?.getString("path")
-    val stickers = options?.getArray("stickers") as ReadableArray
+    val stickers = options?.getArray("stickers")
+    val language = options?.getString("language")
+
+    // Log for debugging
+    Log.d("PhotoEditorModule", "Opening editor with language: $language")
+
+    // Set language in companion object before starting activity
+    if (language != null) {
+      PhotoEditorActivity.languageToApply = language
+      intent.putExtra("language", language)
+      Log.d("PhotoEditorModule", "Language set: $language")
+    } else {
+      PhotoEditorActivity.languageToApply = null
+    }
 
     intent.putExtra("path", path)
-    intent.putExtra("stickers", stickers.toArrayList())
+    if (stickers != null) {
+      intent.putExtra("stickers", stickers.toArrayList())
+    }
 
     activity.startActivityForResult(intent, EDIT_SUCCESSFUL)
   }

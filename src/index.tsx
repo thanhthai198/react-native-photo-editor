@@ -1,8 +1,23 @@
 import { NativeModules } from 'react-native';
 
+export type LanguageType =
+  | 'system'
+  | 'en'
+  | 'vi'
+  | 'zh-Hans'
+  | 'zh-Hant'
+  | 'ja'
+  | 'fr'
+  | 'de'
+  | 'ru'
+  | 'ko'
+  | 'ms'
+  | 'it';
+
 export type Options = {
   path: String;
-  stickers: Array<String>;
+  stickers?: Array<String>;
+  language?: LanguageType;
 };
 
 export type ErrorCode =

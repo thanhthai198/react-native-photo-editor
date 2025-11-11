@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Photo Editor</string>
+    <string name="label_brush">브러시</string>
+    <string name="label_shape">도형</string>
+    <string name="label_oval">타원</string>
+    <string name="label_rectangle">직사각형</string>
+    <string name="label_line">직선</string>
+    <string name="label_emoji">이모티콘</string>
+    <string name="label_sticker">스티커</string>
+    <string name="label_eraser">지우개</string>
+    <string name="label_eraser_mode">지우개 모드</string>
+    <string name="label_text">텍스트</string>
+    <string name="label_filter">필터</string>
+    <string name="label_adjust">조정</string>
+    <string name="msg_save_image">이미지를 저장하지 않고 종료하시겠습니까?</string>
+    <string name="app_intent_name">PhotoEditor</string>
+    <string name="msg_save_image_to_share">공유하려면 이미지를 저장하세요</string>
+    <string name="msg_share_image">이미지 공유</string>
+    <string name="save_error">저장 실패. 다시 시도해주세요!</string>
+    <string name="done">완료</string>
+    <string name="save">저장</string>
+    <string name="cancel">취소</string>
+    <string name="discard">삭제</string>
+    <string name="label_brush_size">브러시 크기</string>
+    <string name="label_opacity">불투명도</string>
+</resources>

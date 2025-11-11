@@ -25,8 +25,6 @@ public class PropertiesBSFragment extends BottomSheetDialogFragment implements S
     public interface Properties {
         void onColorChanged(int colorCode);
 
-        void onOpacityChanged(int opacity);
-
         void onShapeSizeChanged(int shapeSize);
     }
 
@@ -44,10 +42,8 @@ public class PropertiesBSFragment extends BottomSheetDialogFragment implements S
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView rvColor = view.findViewById(R.id.rvColors);
-        SeekBar sbOpacity = view.findViewById(R.id.sbOpacity);
         SeekBar sbBrushSize = view.findViewById(R.id.sbSize);
 
-        sbOpacity.setOnSeekBarChangeListener(this);
         sbBrushSize.setOnSeekBarChangeListener(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -73,11 +69,7 @@ public class PropertiesBSFragment extends BottomSheetDialogFragment implements S
     @Override
     public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
       int id = seekBar.getId();
-      if (id == R.id.sbOpacity) {
-        if (mProperties != null) {
-          mProperties.onOpacityChanged(i);
-        }
-      } else if (id == R.id.sbSize) {
+      if (id == R.id.sbSize) {
         if (mProperties != null) {
           mProperties.onShapeSizeChanged(i);
         }

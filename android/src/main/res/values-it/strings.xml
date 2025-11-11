@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Photo Editor</string>
+    <string name="label_brush">Pennello</string>
+    <string name="label_shape">Forma</string>
+    <string name="label_oval">Ovale</string>
+    <string name="label_rectangle">Rettangolo</string>
+    <string name="label_line">Linea</string>
+    <string name="label_emoji">Emoji</string>
+    <string name="label_sticker">Adesivo</string>
+    <string name="label_eraser">Gomma</string>
+    <string name="label_eraser_mode">Modalità gomma</string>
+    <string name="label_text">Testo</string>
+    <string name="label_filter">Filtro</string>
+    <string name="label_adjust">Regola</string>
+    <string name="msg_save_image">Vuoi uscire senza salvare l\'immagine?</string>
+    <string name="app_intent_name">PhotoEditor</string>
+    <string name="msg_save_image_to_share">Salva l\'immagine per condividerla</string>
+    <string name="msg_share_image">Condividi immagine</string>
+    <string name="save_error">Salvataggio non riuscito. Riprova!</string>
+    <string name="done">Fatto</string>
+    <string name="save">Salva</string>
+    <string name="cancel">Annulla</string>
+    <string name="discard">Scarta</string>
+    <string name="label_brush_size">Dimensione pennello</string>
+    <string name="label_opacity">Opacità</string>
+</resources>

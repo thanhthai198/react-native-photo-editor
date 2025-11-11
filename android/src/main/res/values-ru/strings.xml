@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Photo Editor</string>
+    <string name="label_brush">Кисть</string>
+    <string name="label_shape">Форма</string>
+    <string name="label_oval">Овал</string>
+    <string name="label_rectangle">Прямоугольник</string>
+    <string name="label_line">Линия</string>
+    <string name="label_emoji">Эмодзи</string>
+    <string name="label_sticker">Стикер</string>
+    <string name="label_eraser">Ластик</string>
+    <string name="label_eraser_mode">Режим ластика</string>
+    <string name="label_text">Текст</string>
+    <string name="label_filter">Фильтр</string>
+    <string name="label_adjust">Настроить</string>
+    <string name="msg_save_image">Вы хотите выйти без сохранения изображения?</string>
+    <string name="app_intent_name">PhotoEditor</string>
+    <string name="msg_save_image_to_share">Пожалуйста, сохраните изображение для обмена</string>
+    <string name="msg_share_image">Поделиться изображением</string>
+    <string name="save_error">Не удалось сохранить. Пожалуйста, попробуйте еще раз!</string>
+    <string name="done">Готово</string>
+    <string name="save">Сохранить</string>
+    <string name="cancel">Отмена</string>
+    <string name="discard">Отменить</string>
+    <string name="label_brush_size">Размер кисти</string>
+    <string name="label_opacity">Непрозрачность</string>
+</resources>

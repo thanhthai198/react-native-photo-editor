@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Photo Editor</string>
+    <string name="label_brush">Bút vẽ</string>
+    <string name="label_shape">Hình dạng</string>
+    <string name="label_oval">Hình oval</string>
+    <string name="label_rectangle">Hình chữ nhật</string>
+    <string name="label_line">Đường thẳng</string>
+    <string name="label_emoji">Biểu tượng</string>
+    <string name="label_sticker">Nhãn dán</string>
+    <string name="label_eraser">Tẩy</string>
+    <string name="label_eraser_mode">Chế độ tẩy</string>
+    <string name="label_text">Chữ</string>
+    <string name="label_filter">Bộ lọc</string>
+    <string name="label_adjust">Điều chỉnh</string>
+    <string name="msg_save_image">Bạn có muốn thoát mà không lưu ảnh?</string>
+    <string name="app_intent_name">PhotoEditor</string>
+    <string name="msg_save_image_to_share">Vui lòng lưu ảnh để chia sẻ</string>
+    <string name="msg_share_image">Chia sẻ ảnh</string>
+    <string name="save_error">Lưu thất bại. Vui lòng thử lại!</string>
+    <string name="done">Xong</string>
+    <string name="save">Lưu</string>
+    <string name="cancel">Hủy</string>
+    <string name="discard">Bỏ qua</string>
+    <string name="label_brush_size">Kích thước bút</string>
+    <string name="label_opacity">Độ mờ</string>
+</resources>

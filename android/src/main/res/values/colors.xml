@@ -18,6 +18,12 @@
   <color name="violet_color_picker">#8359A3</color>
   <color name="yellow_color_picker">#FBE870</color>
   <color name="yellow_green_color_picker">#C5E17A</color>
+  <color name="light_green_color_picker">#8BC34A</color>
+  <color name="teal_color_picker">#009688</color>
+  <color name="indigo_color_picker">#3F51B5</color>
+  <color name="deep_purple_color_picker">#9C27B0</color>
+  <color name="pink_color_picker">#E91E63</color>
+  <color name="grey_color_picker">#9E9E9E</color>
   <color name="tool_bg">#000</color>
   <color name="semi_black_transparent">#99000000</color>
 

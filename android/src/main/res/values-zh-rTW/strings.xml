@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Photo Editor</string>
+    <string name="label_brush">畫筆</string>
+    <string name="label_shape">形狀</string>
+    <string name="label_oval">橢圓</string>
+    <string name="label_rectangle">矩形</string>
+    <string name="label_line">直線</string>
+    <string name="label_emoji">表情符號</string>
+    <string name="label_sticker">貼紙</string>
+    <string name="label_eraser">橡皮擦</string>
+    <string name="label_eraser_mode">橡皮擦模式</string>
+    <string name="label_text">文字</string>
+    <string name="label_filter">濾鏡</string>
+    <string name="label_adjust">調整</string>
+    <string name="msg_save_image">要退出而不儲存圖片嗎？</string>
+    <string name="app_intent_name">PhotoEditor</string>
+    <string name="msg_save_image_to_share">請儲存圖片以分享</string>
+    <string name="msg_share_image">分享圖片</string>
+    <string name="save_error">儲存失敗。請重試！</string>
+    <string name="done">完成</string>
+    <string name="save">儲存</string>
+    <string name="cancel">取消</string>
+    <string name="discard">捨棄</string>
+    <string name="label_brush_size">筆刷大小</string>
+    <string name="label_opacity">不透明度</string>
+</resources>

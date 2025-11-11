@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Photo Editor</string>
+    <string name="label_brush">Pinceau</string>
+    <string name="label_shape">Forme</string>
+    <string name="label_oval">Ovale</string>
+    <string name="label_rectangle">Rectangle</string>
+    <string name="label_line">Ligne</string>
+    <string name="label_emoji">Emoji</string>
+    <string name="label_sticker">Autocollant</string>
+    <string name="label_eraser">Gomme</string>
+    <string name="label_eraser_mode">Mode gomme</string>
+    <string name="label_text">Texte</string>
+    <string name="label_filter">Filtre</string>
+    <string name="label_adjust">Ajuster</string>
+    <string name="msg_save_image">Voulez-vous quitter sans sauvegarder l\'image ?</string>
+    <string name="app_intent_name">PhotoEditor</string>
+    <string name="msg_save_image_to_share">Veuillez enregistrer l\'image pour la partager</string>
+    <string name="msg_share_image">Partager l\'image</string>
+    <string name="save_error">Échec de la sauvegarde. Veuillez réessayer !</string>
+    <string name="done">Terminé</string>
+    <string name="save">Enregistrer</string>
+    <string name="cancel">Annuler</string>
+    <string name="discard">Abandonner</string>
+    <string name="label_brush_size">Taille du pinceau</string>
+    <string name="label_opacity">Opacité</string>
+</resources>

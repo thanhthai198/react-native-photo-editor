@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Photo Editor</string>
+    <string name="label_brush">Berus</string>
+    <string name="label_shape">Bentuk</string>
+    <string name="label_oval">Bujur</string>
+    <string name="label_rectangle">Segi empat tepat</string>
+    <string name="label_line">Garis</string>
+    <string name="label_emoji">Emoji</string>
+    <string name="label_sticker">Pelekat</string>
+    <string name="label_eraser">Pemadam</string>
+    <string name="label_eraser_mode">Mod pemadam</string>
+    <string name="label_text">Teks</string>
+    <string name="label_filter">Penapis</string>
+    <string name="label_adjust">Laraskan</string>
+    <string name="msg_save_image">Adakah anda mahu keluar tanpa menyimpan imej?</string>
+    <string name="app_intent_name">PhotoEditor</string>
+    <string name="msg_save_image_to_share">Sila simpan imej untuk berkongsi</string>
+    <string name="msg_share_image">Kongsi imej</string>
+    <string name="save_error">Gagal menyimpan. Sila cuba lagi!</string>
+    <string name="done">Selesai</string>
+    <string name="save">Simpan</string>
+    <string name="cancel">Batal</string>
+    <string name="discard">Buang</string>
+    <string name="label_brush_size">Saiz berus</string>
+    <string name="label_opacity">Kelegapan</string>
+</resources>

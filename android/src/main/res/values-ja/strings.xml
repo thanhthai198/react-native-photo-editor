@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Photo Editor</string>
+    <string name="label_brush">ブラシ</string>
+    <string name="label_shape">図形</string>
+    <string name="label_oval">楕円</string>
+    <string name="label_rectangle">四角形</string>
+    <string name="label_line">直線</string>
+    <string name="label_emoji">絵文字</string>
+    <string name="label_sticker">ステッカー</string>
+    <string name="label_eraser">消しゴム</string>
+    <string name="label_eraser_mode">消しゴムモード</string>
+    <string name="label_text">テキスト</string>
+    <string name="label_filter">フィルター</string>
+    <string name="label_adjust">調整</string>
+    <string name="msg_save_image">画像を保存せずに終了しますか？</string>
+    <string name="app_intent_name">PhotoEditor</string>
+    <string name="msg_save_image_to_share">共有するには画像を保存してください</string>
+    <string name="msg_share_image">画像を共有</string>
+    <string name="save_error">保存に失敗しました。もう一度お試しください！</string>
+    <string name="done">完了</string>
+    <string name="save">保存</string>
+    <string name="cancel">キャンセル</string>
+    <string name="discard">破棄</string>
+    <string name="label_brush_size">ブラシサイズ</string>
+    <string name="label_opacity">不透明度</string>
+</resources>

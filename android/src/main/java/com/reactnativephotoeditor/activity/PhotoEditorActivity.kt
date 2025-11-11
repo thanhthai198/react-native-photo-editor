@@ -3,15 +3,18 @@ package com.reactnativephotoeditor.activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.LocaleList
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -52,6 +55,7 @@ import ja.burhanrashid52.photoeditor.PhotoEditor.OnSaveListener
 import ja.burhanrashid52.photoeditor.shape.ShapeBuilder
 import ja.burhanrashid52.photoeditor.shape.ShapeType
 import java.io.File
+import java.util.Locale
 
 
 open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, View.OnClickListener,
@@ -73,8 +77,28 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
   private val mConstraintSet = ConstraintSet()
   private var mIsFilterVisible = false
 
+  override fun attachBaseContext(newBase: Context) {
+    val language = languageToApply
+    Log.d("PhotoEditorActivity", "attachBaseContext - Received language: $language")
+    
+    val context = if (language != null && language != "system") {
+      Log.d("PhotoEditorActivity", "attachBaseContext - Setting locale to: $language")
+      updateContextLocale(newBase, language)
+    } else {
+      Log.d("PhotoEditorActivity", "attachBaseContext - Using system locale")
+      newBase
+    }
+    
+    super.attachBaseContext(context)
+  }
+
   @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
   override fun onCreate(savedInstanceState: Bundle?) {
+    // Get language from intent and store it
+    val language = intent.getStringExtra("language")
+    languageToApply = language
+    Log.d("PhotoEditorActivity", "onCreate - Language from intent: $language")
+    
     super.onCreate(savedInstanceState)
     makeFullScreen()
     setContentView(R.layout.photo_editor_view)
@@ -83,10 +107,13 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
     //intern
     val value = intent.extras
     val path = value?.getString("path")
-    val stickers =
-      value?.getStringArrayList("stickers")?.plus(
-        assets.list("Stickers")!!
-          .map { item -> "/android_asset/Stickers/$item" }) as ArrayList<String>
+    
+    // Get stickers from both remote and local assets
+    val remoteStickers = value?.getStringArrayList("stickers") ?: arrayListOf()
+    val localStickers = assets.list("Stickers")?.map { item -> "/android_asset/Stickers/$item" } ?: listOf()
+    val stickers = (remoteStickers + localStickers) as ArrayList<String>
+    
+    Log.d("PhotoEditorActivity", "Total stickers: ${stickers.size}")
 //    println("stickers: $stickers ${stickers.size}")
 //    for (stick in stickers) {
 //      print("stick: $stickers")
@@ -313,11 +340,6 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
     mTxtCurrentTool!!.setText(R.string.label_brush)
   }
 
-  override fun onOpacityChanged(opacity: Int) {
-    mPhotoEditor!!.setShape(mShapeBuilder!!.withShapeOpacity(opacity))
-    mTxtCurrentTool!!.setText(R.string.label_brush)
-  }
-
   override fun onShapeSizeChanged(shapeSize: Int) {
     mPhotoEditor!!.setShape(mShapeBuilder!!.withShapeSize(shapeSize.toFloat()))
     mTxtCurrentTool!!.setText(R.string.label_brush)
@@ -335,9 +357,9 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
   private fun showSaveDialog() {
     val builder = AlertDialog.Builder(this)
     builder.setMessage(getString(R.string.msg_save_image))
-    builder.setPositiveButton("Save") { _: DialogInterface?, _: Int -> saveImage() }
-    builder.setNegativeButton("Cancel") { dialog: DialogInterface, _: Int -> dialog.dismiss() }
-    builder.setNeutralButton("Discard") { _: DialogInterface?, _: Int -> onCancel() }
+    builder.setPositiveButton(getString(R.string.save)) { _: DialogInterface?, _: Int -> saveImage() }
+    builder.setNegativeButton(getString(R.string.cancel)) { dialog: DialogInterface, _: Int -> dialog.dismiss() }
+    builder.setNeutralButton(getString(R.string.discard)) { _: DialogInterface?, _: Int -> onCancel() }
     builder.create().show()
   }
 
@@ -418,7 +440,7 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
   override fun onBackPressed() {
     if (mIsFilterVisible) {
       showFilter(false)
-      mTxtCurrentTool!!.setText(R.string.app_name)
+      mTxtCurrentTool!!.setText("")
     } else if (!mPhotoEditor!!.isCacheEmpty) {
       showSaveDialog()
     } else {
@@ -426,9 +448,52 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
     }
   }
 
+  // Update context with new locale
+  private fun updateContextLocale(context: Context, languageCode: String): Context {
+    val locale = getLocaleFromLanguageCode(languageCode)
+    Log.d("PhotoEditorActivity", "Updating context locale: ${locale.language}_${locale.country}")
+    
+    Locale.setDefault(locale)
+    
+    val config = Configuration(context.resources.configuration)
+    config.setLocale(locale)
+    
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      val localeList = LocaleList(locale)
+      LocaleList.setDefault(localeList)
+      config.setLocales(localeList)
+      return context.createConfigurationContext(config)
+    }
+    
+    @Suppress("DEPRECATION")
+    context.resources.updateConfiguration(config, context.resources.displayMetrics)
+    return context
+  }
+
+  // Map language code to Locale
+  private fun getLocaleFromLanguageCode(code: String): Locale {
+    return when (code.toLowerCase()) {
+      "en" -> Locale.ENGLISH
+      "vi" -> Locale("vi", "VN")
+      "zh-hans", "zh-cn" -> Locale.SIMPLIFIED_CHINESE
+      "zh-hant", "zh-tw" -> Locale.TRADITIONAL_CHINESE
+      "ja" -> Locale.JAPANESE
+      "fr" -> Locale.FRENCH
+      "de" -> Locale.GERMAN
+      "ru" -> Locale("ru", "RU")
+      "ko" -> Locale.KOREAN
+      "ms" -> Locale("ms", "MY")
+      "it" -> Locale.ITALIAN
+      else -> Locale.getDefault()
+    }
+  }
+
   companion object {
     private val TAG = PhotoEditorActivity::class.java.simpleName
     const val PINCH_TEXT_SCALABLE_INTENT_KEY = "PINCH_TEXT_SCALABLE"
     const val READ_WRITE_STORAGE = 52
+    
+    // Store language to apply before attachBaseContext is called
+    var languageToApply: String? = null
   }
 }

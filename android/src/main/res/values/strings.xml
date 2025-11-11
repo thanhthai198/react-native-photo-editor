@@ -18,6 +18,11 @@
   <string name="msg_share_image">Share Image</string>
   <string name="save_error">Failed to save. Please try again!</string>
   <string name="done">Done</string>
+  <string name="save">Save</string>
+  <string name="cancel">Cancel</string>
+  <string name="discard">Discard</string>
+  <string name="label_brush_size">Brush</string>
+  <string name="label_opacity">Opacity</string>
 
   <string-array name="photo_editor_emoji">
 

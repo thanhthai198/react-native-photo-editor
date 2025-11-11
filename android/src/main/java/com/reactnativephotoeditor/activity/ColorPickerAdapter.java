@@ -105,18 +105,38 @@ public class ColorPickerAdapter extends RecyclerView.Adapter<ColorPickerAdapter.
 
     public static List<Integer> getDefaultColors(Context context) {
         ArrayList<Integer> colorPickerColors = new ArrayList<>();
-        colorPickerColors.add(ContextCompat.getColor(context, R.color.blue_color_picker));
-        colorPickerColors.add(ContextCompat.getColor(context, R.color.brown_color_picker));
-        colorPickerColors.add(ContextCompat.getColor(context, R.color.green_color_picker));
-        colorPickerColors.add(ContextCompat.getColor(context, R.color.orange_color_picker));
-        colorPickerColors.add(ContextCompat.getColor(context, R.color.red_color_picker));
-        colorPickerColors.add(ContextCompat.getColor(context, R.color.black));
-        colorPickerColors.add(ContextCompat.getColor(context, R.color.red_orange_color_picker));
-        colorPickerColors.add(ContextCompat.getColor(context, R.color.sky_blue_color_picker));
-        colorPickerColors.add(ContextCompat.getColor(context, R.color.violet_color_picker));
+        // Basic colors
         colorPickerColors.add(ContextCompat.getColor(context, R.color.white));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.black));
+        
+        // Red tones
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.red_color_picker));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.red_orange_color_picker));
+        
+        // Orange & Yellow
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.orange_color_picker));
         colorPickerColors.add(ContextCompat.getColor(context, R.color.yellow_color_picker));
+        
+        // Green tones
         colorPickerColors.add(ContextCompat.getColor(context, R.color.yellow_green_color_picker));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.light_green_color_picker));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.green_color_picker));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.teal_color_picker));
+        
+        // Blue tones
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.sky_blue_color_picker));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.blue_color_picker));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.indigo_color_picker));
+        
+        // Purple & Pink
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.violet_color_picker));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.deep_purple_color_picker));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.pink_color_picker));
+        
+        // Brown & Grey
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.brown_color_picker));
+        colorPickerColors.add(ContextCompat.getColor(context, R.color.grey_color_picker));
+        
         return colorPickerColors;
     }
 }

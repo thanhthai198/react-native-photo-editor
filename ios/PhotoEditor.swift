@@ -52,6 +52,11 @@ class PhotoEditor: NSObject, ZLEditImageControllerDelegate {
         self.resolve = resolve;
         self.reject = reject;
         
+        // Language configuration
+        if let languageCode = options["language"] as? String {
+            ZLImageEditorConfiguration.default().languageType = getLanguageType(from: languageCode)
+        }
+        
         // Stickers
         let stickers = options["stickers"] as? [String] ?? []
         ZLImageEditorConfiguration.default().imageStickerContainerView = StickerView(stickers: stickers)
@@ -60,7 +65,30 @@ class PhotoEditor: NSObject, ZLEditImageControllerDelegate {
         //Config
         ZLImageEditorConfiguration.default().editDoneBtnBgColor = UIColor(red:255/255.0, green:238/255.0, blue:101/255.0, alpha:1.0)
 
-        ZLImageEditorConfiguration.default().editImageTools = [.draw, .clip, .filter, .imageSticker, .textSticker]
+        // Custom colors palette - More colors
+        let customColors: [UIColor] = [
+            .white,                                     // Trắng
+            .black,                                     // Đen
+            zlRGB(241, 79, 79),                        // Đỏ
+            zlRGB(243, 170, 78),                       // Cam
+            zlRGB(255, 235, 59),                       // Vàng
+            zlRGB(139, 195, 74),                       // Xanh lá nhạt
+            zlRGB(80, 169, 56),                        // Xanh lá
+            zlRGB(0, 150, 136),                        // Xanh lục lam
+            zlRGB(30, 183, 243),                       // Xanh da trời
+            zlRGB(33, 150, 243),                       // Xanh dương
+            zlRGB(63, 81, 181),                        // Xanh đậm
+            zlRGB(139, 105, 234),                      // Tím
+            zlRGB(156, 39, 176),                       // Tím đậm
+            zlRGB(233, 30, 99),                        // Hồng
+            zlRGB(121, 85, 72),                        // Nâu
+            zlRGB(158, 158, 158)                       // Xám
+        ]
+        
+        ZLImageEditorConfiguration.default().editImageDrawColors = customColors
+        ZLImageEditorConfiguration.default().textStickerTextColors = customColors
+        
+        ZLImageEditorConfiguration.default().editImageTools = [.draw, .clip, .textSticker]
         
         //Filters Lut
         do {
@@ -111,6 +139,35 @@ class PhotoEditor: NSObject, ZLEditImageControllerDelegate {
         }
     }
     
+    // Map language code to ZLImageEditorLanguageType
+    private func getLanguageType(from code: String) -> ZLImageEditorLanguageType {
+        switch code.lowercased() {
+        case "en":
+            return .english
+        case "vi":
+            return .vietnamese
+        case "zh-hans", "zh-cn", "zh_hans":
+            return .chineseSimplified
+        case "zh-hant", "zh-tw", "zh_hant":
+            return .chineseTraditional
+        case "ja", "jp":
+            return .japanese
+        case "fr":
+            return .french
+        case "de":
+            return .german
+        case "ru":
+            return .russian
+        case "ko":
+            return .korean
+        case "ms":
+            return .malay
+        case "it":
+            return .italian
+        default:
+            return .system
+        }
+    }
 }
 
 extension UIApplication {
