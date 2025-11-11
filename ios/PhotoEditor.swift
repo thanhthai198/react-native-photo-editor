@@ -104,9 +104,9 @@ class PhotoEditor: NSObject, ZLEditImageControllerDelegate {
             controller.modalTransitionStyle = .crossDissolve
             
             ZLEditImageViewController.showEditImageVC(parentVC:controller , image: image, delegate: self) { [weak self] (resImage, editModel) in
-                let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
-                
-                let destinationPath = URL(fileURLWithPath: documentsPath).appendingPathComponent(String(Int64(Date().timeIntervalSince1970 * 1000)) + ".png")
+                // Save to temporary cache directory instead of documents
+                let cachePath = NSTemporaryDirectory()
+                let destinationPath = URL(fileURLWithPath: cachePath).appendingPathComponent(String(Int64(Date().timeIntervalSince1970 * 1000)) + ".png")
                 
                 do {
                     try resImage.pngData()?.write(to: destinationPath)

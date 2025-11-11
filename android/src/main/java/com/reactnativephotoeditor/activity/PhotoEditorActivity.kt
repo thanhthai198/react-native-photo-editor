@@ -311,46 +311,33 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
 
   private fun saveImage() {
     val fileName = System.currentTimeMillis().toString() + ".png"
-    val hasStoragePermission = ContextCompat.checkSelfPermission(
-      this,
-      Manifest.permission.WRITE_EXTERNAL_STORAGE
-    ) == PackageManager.PERMISSION_GRANTED
-    if (hasStoragePermission || isSdkHigherThan28()) {
-      showLoading("Saving...")
-      val path: File = Environment.getExternalStoragePublicDirectory(
-        Environment.DIRECTORY_PICTURES
-      )
-      val file = File(path, fileName)
-      path.mkdirs()
+    showLoading("Saving...")
+    
+    // Save to cache directory instead of Pictures gallery
+    val cacheDir = cacheDir
+    val file = File(cacheDir, fileName)
 
-      mPhotoEditor!!.saveAsFile(file.absolutePath, object : OnSaveListener {
-        override fun onSuccess(@NonNull imagePath: String) {
-          hideLoading()
-          val intent = Intent()
-          intent.putExtra("path", imagePath)
-          setResult(ResponseCode.RESULT_OK, intent)
-          finish()
-        }
+    mPhotoEditor!!.saveAsFile(file.absolutePath, object : OnSaveListener {
+      override fun onSuccess(@NonNull imagePath: String) {
+        hideLoading()
+        val intent = Intent()
+        intent.putExtra("path", imagePath)
+        setResult(ResponseCode.RESULT_OK, intent)
+        finish()
+      }
 
-        override fun onFailure(@NonNull exception: Exception) {
-          hideLoading()
-          if (!hasStoragePermission) {
-            requestPer()
-          } else {
-            mPhotoEditorView?.let {
-              val snackBar = Snackbar.make(
-                it, R.string.save_error,
-                Snackbar.LENGTH_SHORT)
-              snackBar.setBackgroundTint(Color.WHITE)
-              snackBar.setActionTextColor(Color.BLACK)
-              snackBar.setAction("Ok", null).show()
-            }
-          }
+      override fun onFailure(@NonNull exception: Exception) {
+        hideLoading()
+        mPhotoEditorView?.let {
+          val snackBar = Snackbar.make(
+            it, R.string.save_error,
+            Snackbar.LENGTH_SHORT)
+          snackBar.setBackgroundTint(Color.WHITE)
+          snackBar.setActionTextColor(Color.BLACK)
+          snackBar.setAction("Ok", null).show()
         }
-      })
-    } else {
-      requestPer()
-    }
+      }
+    })
   }
 
   private fun requestPer() {
