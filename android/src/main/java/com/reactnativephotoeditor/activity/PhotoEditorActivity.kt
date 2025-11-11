@@ -17,10 +17,10 @@ import android.os.Environment
 import android.os.LocaleList
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AnticipateOvershootInterpolator
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -31,6 +31,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
@@ -76,6 +78,7 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
   private var mRootView: ConstraintLayout? = null
   private val mConstraintSet = ConstraintSet()
   private var mIsFilterVisible = false
+  
 
   override fun attachBaseContext(newBase: Context) {
     val language = languageToApply
@@ -192,6 +195,24 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
     }
   }
 
+  private fun getNavigationBarHeight(context: Context): Int {
+    val resourceId = context.resources.getIdentifier("navigation_bar_height", "dimen", "android")
+    return if (resourceId > 0) {
+      context.resources.getDimensionPixelSize(resourceId)
+    } else {
+      0
+    }
+  }
+
+  private fun applyRootBottomPadding(root: View, spacingPx: Int) {
+    root.setPadding(
+      root.paddingLeft,
+      root.paddingTop,
+      root.paddingRight,
+      root.paddingBottom + spacingPx 
+    )
+  }
+
   private fun requestPermission(permission: String) {
     val isGranted =
       ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
@@ -231,6 +252,7 @@ open class PhotoEditorActivity : AppCompatActivity(), OnPhotoEditorListener, Vie
     mRvTools = findViewById(R.id.rvConstraintTools)
     mRvFilters = findViewById(R.id.rvFilterView)
     mRootView = findViewById(R.id.rootView)
+    applyRootBottomPadding(mRootView as ConstraintLayout, getNavigationBarHeight(this))
   }
 
   override fun onEditTextChangeListener(rootView: View, text: String, colorCode: Int) {
